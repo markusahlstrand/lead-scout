@@ -31,24 +31,6 @@
   }
 }
 
-@layer components {
-  .text-xs {
-    @apply text-xs;
-  }
-
-  .text-sm {
-    @apply text-sm;
-  }
-
-  .text-base {
-    @apply text-base;
-  }
-
-  .text-lg {
-    @apply text-lg;
-  }
-}
-
 html {
   scroll-behavior: smooth;
 }
