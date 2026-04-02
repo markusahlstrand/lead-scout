@@ -63,7 +63,7 @@ export default function Companies({ tenantId }: CompaniesProps) {
       filtered = filtered.filter(
         (c) =>
           c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          c.website?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          c.domain?.toLowerCase().includes(searchTerm.toLowerCase()) ||
           c.industry?.toLowerCase().includes(searchTerm.toLowerCase())
       )
     }
@@ -79,11 +79,13 @@ export default function Companies({ tenantId }: CompaniesProps) {
     switch (status) {
       case 'new':
         return 'blue'
-      case 'engaged':
+      case 'researched':
+        return 'blue'
+      case 'contacted':
         return 'yellow'
-      case 'customer':
+      case 'qualified':
         return 'green'
-      case 'dismissed':
+      case 'disqualified':
         return 'gray'
       default:
         return 'default'
@@ -106,10 +108,10 @@ export default function Companies({ tenantId }: CompaniesProps) {
     if (company) {
       setFormData({
         name: company.name,
-        website: company.website || '',
+        website: company.domain || '',
         industry: company.industry || '',
-        size: company.size || '',
-        status: company.status,
+        size: company.sizeEstimate || '',
+        status: company.status as any,
         notes: company.notes || '',
       })
       setEditingId(company.id)
@@ -230,17 +232,17 @@ export default function Companies({ tenantId }: CompaniesProps) {
                       </div>
 
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                        {company.website && (
+                        {company.domain && (
                           <div>
-                            <p className="text-muted-foreground">Website</p>
+                            <p className="text-muted-foreground">Domain</p>
                             <a
-                              href={company.website}
+                              href={`https://${company.domain}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-accent hover:underline truncate"
                               onClick={(e) => e.stopPropagation()}
                             >
-                              {company.website}
+                              {company.domain}
                             </a>
                           </div>
                         )}
@@ -250,10 +252,10 @@ export default function Companies({ tenantId }: CompaniesProps) {
                             <p>{company.industry}</p>
                           </div>
                         )}
-                        {company.size && (
+                        {company.sizeEstimate && (
                           <div>
                             <p className="text-muted-foreground">Size</p>
-                            <p>{company.size}</p>
+                            <p>{company.sizeEstimate}</p>
                           </div>
                         )}
                         <div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Plus, Edit, Trash2, LinkIcon, Toggle2 } from 'lucide-react'
+import { Plus, Edit, Trash2, LinkIcon, Power } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -220,7 +220,7 @@ export default function Sources({ tenantId }: SourcesProps) {
                           size="sm"
                           onClick={() => handleToggleActive(source.id, source.active)}
                         >
-                          <Toggle2 className="w-4 h-4" />
+                          <Power className="w-4 h-4" />
                         </Button>
                         <Button
                           variant="ghost"
@@ -285,7 +285,7 @@ export default function Sources({ tenantId }: SourcesProps) {
                           size="sm"
                           onClick={() => handleToggleActive(source.id, source.active)}
                         >
-                          <Toggle2 className="w-4 h-4" />
+                          <Power className="w-4 h-4" />
                         </Button>
                         <Button
                           variant="ghost"

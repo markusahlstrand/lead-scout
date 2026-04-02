@@ -99,7 +99,7 @@ router.get('/', async (c) => {
       conditions.push(eq(engagementEvents.mediaAssetId, media_asset_id));
     }
     if (event_type) {
-      conditions.push(eq(engagementEvents.eventType, event_type));
+      conditions.push(eq(engagementEvents.eventType, event_type as any));
     }
     if (actor_handle) {
       conditions.push(eq(engagementEvents.actorHandle, actor_handle));

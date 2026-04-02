@@ -44,7 +44,7 @@ export default function Leads({ tenantId }: LeadsProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    title: '',
+    role: '',
     handle: '',
     companyId: '',
     status: 'new' as const,
@@ -82,7 +82,7 @@ export default function Leads({ tenantId }: LeadsProps) {
       filtered = filtered.filter(
         (l) =>
           l.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          l.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          l.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
           l.handle?.toLowerCase().includes(searchTerm.toLowerCase())
       )
     }
@@ -126,11 +126,11 @@ export default function Leads({ tenantId }: LeadsProps) {
         return 'blue'
       case 'contacted':
         return 'yellow'
-      case 'interested':
-        return 'warning'
-      case 'qualified':
+      case 'engaged':
         return 'green'
-      case 'dismissed':
+      case 'converted':
+        return 'green'
+      case 'inactive':
         return 'gray'
       default:
         return 'default'
@@ -147,7 +147,7 @@ export default function Leads({ tenantId }: LeadsProps) {
     setFormData({
       name: '',
       email: '',
-      title: '',
+      role: '',
       handle: '',
       companyId: '',
       status: 'new',
@@ -166,16 +166,16 @@ export default function Leads({ tenantId }: LeadsProps) {
     if (lead) {
       setFormData({
         name: lead.name,
-        email: lead.email,
-        title: lead.title || '',
+        email: lead.email || '',
+        role: lead.role || '',
         handle: lead.handle || '',
-        companyId: lead.companyId,
-        status: lead.status,
-        leadType: lead.leadType,
+        companyId: lead.companyId || '',
+        status: lead.status as any,
+        leadType: lead.leadType as any,
         signal: lead.signal || '',
-        signalStrength: lead.signalStrength,
+        signalStrength: lead.signalStrength as any,
         sourceUrl: lead.sourceUrl || '',
-        relevanceScore: lead.relevanceScore,
+        relevanceScore: lead.relevanceScore || 50,
         platform: lead.platform || '',
         notes: lead.notes || '',
       })
@@ -370,10 +370,10 @@ export default function Leads({ tenantId }: LeadsProps) {
                           </a>
                         </div>
                       )}
-                      {lead.title && (
+                      {lead.role && (
                         <div className="flex justify-between items-start">
-                          <span className="text-muted-foreground">Title:</span>
-                          <span className="text-xs">{lead.title}</span>
+                          <span className="text-muted-foreground">Role:</span>
+                          <span className="text-xs">{lead.role}</span>
                         </div>
                       )}
                       {lead.platform && (
@@ -475,10 +475,10 @@ export default function Leads({ tenantId }: LeadsProps) {
               </div>
 
               <div>
-                <label className="text-sm font-medium">Title</label>
+                <label className="text-sm font-medium">Role</label>
                 <Input
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                  value={formData.role}
+                  onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                   placeholder="CTO"
                 />
               </div>

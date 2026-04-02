@@ -1,9 +1,9 @@
-import { Hono } from 'hono';
+import { Context, Next } from 'hono';
 import { Bindings, Variables } from './index';
 
 const authMiddleware = async (
-  c: Hono<{ Bindings: Bindings; Variables: Variables }>,
-  next: () => Promise<void>
+  c: Context<{ Bindings: Bindings; Variables: Variables }>,
+  next: Next
 ) => {
   const authHeader = c.req.header('Authorization');
   const tenantId = c.req.header('X-Tenant-Id');
@@ -28,12 +28,12 @@ const authMiddleware = async (
   }
 
   // Check for same-origin requests (UI requests with valid session/cookie)
-  const requestOrigin = origin || (referer ? new URL(referer).origin : null);
+  const requestOrigin = origin || (referer ? new URL(referer).origin : undefined);
   if (!isAuthenticated && requestOrigin) {
     // In a real app, you'd check for a valid session cookie here
     // For now, we allow same-origin requests if they have a tenant ID
     const currentHost = c.req.header('Host');
-    const isSameOrigin = requestOrigin.includes(currentHost);
+    const isSameOrigin = currentHost ? requestOrigin.includes(currentHost) : false;
 
     if (isSameOrigin && extractedTenantId) {
       isAuthenticated = true;

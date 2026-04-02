@@ -113,7 +113,7 @@ router.get('/', async (c) => {
     }
 
     if (status) {
-      conditions.push(eq(scanLogs.status, status));
+      conditions.push(eq(scanLogs.status, status as any));
     }
 
     const result = await db

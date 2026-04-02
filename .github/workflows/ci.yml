@@ -21,10 +21,13 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm run build
-
       - name: Type check
         run: pnpm exec tsc --noEmit
+
+      - name: Run tests
+        run: pnpm test
+
+      - run: pnpm run build
 
   deploy:
     needs: build

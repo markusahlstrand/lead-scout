@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import { ulid } from 'ulid';
-import { eq, and, like, desc, sql } from 'drizzle-orm';
+import { eq, and, desc, sql } from 'drizzle-orm';
 import { Bindings, Variables } from '../index';
 import { threads, companies, leads, responses as responsesTable } from '../../db/schema';
 import { createDb } from '../../db';
@@ -90,10 +90,10 @@ router.get('/', async (c) => {
     const conditions = [eq(threads.tenantId, tenantId)];
 
     if (status) {
-      conditions.push(eq(threads.status, status));
+      conditions.push(eq(threads.status, status as any));
     }
     if (platform) {
-      conditions.push(eq(threads.platform, platform));
+      conditions.push(eq(threads.platform, platform as any));
     }
     if (source_id) {
       conditions.push(eq(threads.sourceId, source_id));

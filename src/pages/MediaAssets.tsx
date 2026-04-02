@@ -97,10 +97,10 @@ export default function MediaAssets({ tenantId }: MediaAssetsProps) {
     if (asset) {
       setFormData({
         name: asset.name,
-        handle: asset.handle,
+        handle: asset.handle || '',
         platform: asset.platform,
         url: asset.url,
-        followerCount: asset.followerCount,
+        followerCount: asset.followerCount || 0,
         assetType: asset.assetType,
       })
       setEditingId(asset.id)
@@ -118,10 +118,7 @@ export default function MediaAssets({ tenantId }: MediaAssetsProps) {
           assets.map((a) => (a.id === editingId ? { ...a, ...formData } : a))
         )
       } else {
-        const newAsset = await mediaAssetsApi.create(tenantId, {
-          tenantId,
-          ...formData,
-        })
+        const newAsset = await mediaAssetsApi.create(tenantId, formData as any)
         setAssets([...assets, newAsset])
       }
       setShowDialog(false)
@@ -176,7 +173,7 @@ export default function MediaAssets({ tenantId }: MediaAssetsProps) {
     return platformObj?.icon || Globe
   }
 
-  const totalFollowers = assets.reduce((sum, asset) => sum + asset.followerCount, 0)
+  const totalFollowers = assets.reduce((sum, asset) => sum + (asset.followerCount || 0), 0)
   const totalEngagementThisWeek = Object.values(engagementMap).reduce(
     (sum, events) => sum + events.length,
     0
@@ -306,13 +303,13 @@ export default function MediaAssets({ tenantId }: MediaAssetsProps) {
                               <div className="flex justify-between items-center">
                                 <span className="text-xs text-muted-foreground">Followers</span>
                                 <span className="font-semibold text-sm">
-                                  {asset.followerCount.toLocaleString()}
+                                  {(asset.followerCount || 0).toLocaleString()}
                                 </span>
                               </div>
                               <div className="flex justify-between items-center">
                                 <span className="text-xs text-muted-foreground">Last Checked</span>
                                 <span className="text-xs">
-                                  {new Date(asset.lastChecked).toLocaleDateString()}
+                                  {asset.lastCheckedAt ? new Date(asset.lastCheckedAt).toLocaleDateString() : 'Never'}
                                 </span>
                               </div>
                             </div>

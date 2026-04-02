@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import { ulid } from 'ulid';
-import { eq, and, like, desc, sql } from 'drizzle-orm';
+import { eq, and, desc, sql } from 'drizzle-orm';
 import { Bindings, Variables } from '../index';
 import { companies, leads } from '../../db/schema';
 import { createDb } from '../../db';
@@ -72,13 +72,13 @@ router.get('/', async (c) => {
     const conditions = [eq(companies.tenantId, tenantId)];
 
     if (status) {
-      conditions.push(eq(companies.status, status));
+      conditions.push(eq(companies.status, status as any));
     }
     if (industry) {
-      conditions.push(eq(companies.industry, industry));
+      conditions.push(eq(companies.industry, industry as any));
     }
     if (size) {
-      conditions.push(eq(companies.sizeEstimate, size));
+      conditions.push(eq(companies.sizeEstimate, size as any));
     }
     if (search) {
       conditions.push(

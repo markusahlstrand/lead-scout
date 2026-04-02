@@ -79,7 +79,7 @@ export default function Analytics({ tenantId }: AnalyticsProps) {
     const community = leads.filter((l) => l.leadType === 'community').length
     const prospects = leads.filter((l) => l.leadType === 'prospect').length
     const contacted = leads.filter((l) => l.status === 'contacted').length
-    const converted = leads.filter((l) => l.status === 'qualified').length
+    const converted = leads.filter((l) => l.status === 'converted').length
 
     return { community, prospects, contacted, converted }
   }

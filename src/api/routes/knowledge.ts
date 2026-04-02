@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import { ulid } from 'ulid';
-import { eq, and, like, desc, sql } from 'drizzle-orm';
+import { eq, and, desc, sql } from 'drizzle-orm';
 import { Bindings, Variables } from '../index';
 import { knowledge } from '../../db/schema';
 import { createDb } from '../../db';
@@ -67,7 +67,7 @@ router.get('/', async (c) => {
     const conditions = [eq(knowledge.tenantId, tenantId)];
 
     if (category) {
-      conditions.push(eq(knowledge.category, category));
+      conditions.push(eq(knowledge.category, category as any));
     }
 
     if (search) {
@@ -103,7 +103,6 @@ router.get('/', async (c) => {
       data: result.map((item) => ({
         ...item,
         tags: item.tags ? JSON.parse(item.tags) : [],
-        metadata: item.metadata ? JSON.parse(item.metadata) : null,
       })),
       pagination: {
         limit,
@@ -159,7 +158,6 @@ router.put('/:id', async (c) => {
     return c.json({
       ...item,
       tags: item.tags ? JSON.parse(item.tags) : [],
-      metadata: item.metadata ? JSON.parse(item.metadata) : null,
     });
   } catch (error) {
     console.error('Error updating knowledge entry:', error);

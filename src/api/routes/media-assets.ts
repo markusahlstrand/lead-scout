@@ -94,10 +94,10 @@ router.get('/', async (c) => {
     const conditions = [eq(mediaAssets.tenantId, tenantId)];
 
     if (platform) {
-      conditions.push(eq(mediaAssets.platform, platform));
+      conditions.push(eq(mediaAssets.platform, platform as any));
     }
     if (assetType) {
-      conditions.push(eq(mediaAssets.assetType, assetType));
+      conditions.push(eq(mediaAssets.assetType, assetType as any));
     }
     if (active !== undefined) {
       conditions.push(eq(mediaAssets.isActive, active === 'true'));

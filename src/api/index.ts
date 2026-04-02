@@ -1,6 +1,4 @@
 import { Hono } from 'hono';
-import { D1Database } from '@cloudflare/workers-types';
-import { Ai } from '@cloudflare/workers-types';
 import { authMiddleware } from './middleware';
 import threadsRouter from './routes/threads';
 import companiesRouter from './routes/companies';
