@@ -5,7 +5,7 @@ pages_build_output_dir = "dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "lead-scout-db"
-database_id = "926f3622-a11e-4c94-aea3-0d633bed8d43"
+database_id = "585bbac1-05cf-4cb3-ac3c-dca25c638d42"
 migrations_dir = "drizzle"
 
 [ai]
